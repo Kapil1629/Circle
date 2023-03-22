@@ -1,0 +1,88 @@
+version: '3.4'
+services:
+  evantiv.applicant.service:
+    image: '${DOCKER_REGISTRY-}evantiv-applicant-service'
+    build:
+      context: .
+      dockerfile: src/Services/ApplicantService/Dockerfile
+    container_name: evantiv-applicant-service
+    environment:
+      - 'ConnectionStrings__ConfigurationDbConnection=Server=49.12.125.164,1433;Database=evantiv_identity;MultipleActiveResultSets=true;User Id=sa;Password=Gmail.com@098'
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      identityserverui: null
+    ports:
+      - '1001:80' 
+  evantiv.auth.service:
+    image: '${DOCKER_REGISTRY-}evantiv-auth-service'
+    build:
+      context: .
+      dockerfile: src/Services/AuthService/Dockerfile
+    container_name: evantiv-auth-service
+    environment:
+      - 'ConnectionStrings__ConfigurationDbConnection=Server=49.12.125.164,1433;Database=evantiv_identity;MultipleActiveResultSets=true;User Id=sa;Password=Gmail.com@098'
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      identityserverui: null
+    ports:
+      - '1002:80'
+  evantiv.content.service:
+    image: '${DOCKER_REGISTRY-}evantiv-content-service'
+    build:
+      context: .
+      dockerfile: src/Services/ContentService/Dockerfile
+    container_name: evantiv-content-service
+    environment:
+      - 'ConnectionStrings__ConfigurationDbConnection=Server=49.12.125.164,1433;Database=evantiv_identity;MultipleActiveResultSets=true;User Id=sa;Password=Gmail.com@098'
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      identityserverui: null
+    ports:
+      - '1003:80'
+  evantiv.customer.service:
+    image: '${DOCKER_REGISTRY-}evantiv-customer-service'
+    build:
+      context: .
+      dockerfile: src/Services/CustomerService/Dockerfile
+    container_name: evantiv-customer-service
+    environment:
+      - 'ConnectionStrings__ConfigurationDbConnection=Server=49.12.125.164,1433;Database=evantiv_identity;MultipleActiveResultSets=true;User Id=sa;Password=Gmail.com@098'
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      identityserverui: null
+    ports:
+      - '1004:80'
+  evantiv.employee.service:
+    image: '${DOCKER_REGISTRY-}evantiv-employee-service'
+    build:
+      context: .
+      dockerfile: src/Services/EmployeeService/Dockerfile
+    container_name: evantiv-employee-service
+    environment:
+      - 'ConnectionStrings__ConfigurationDbConnection=Server=49.12.125.164,1433;Database=evantiv_identity;MultipleActiveResultSets=true;User Id=sa;Password=Gmail.com@098'
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      identityserverui: null
+    ports:
+      - '1005:80'
+  #evantiv.job.service:
+  #  image: '${DOCKER_REGISTRY-}evantiv-job-service'
+  #  build:
+  #    context: .
+  #    dockerfile: src/Services/JobRequisition/Dockerfile
+  #  container_name: evantiv-job-service
+  #  environment:
+  #    - 'ConnectionStrings__ConfigurationDbConnection=Server=49.12.125.164,1433;Database=evantiv_identity;MultipleActiveResultSets=true;User Id=sa;Password=Gmail.com@098'
+  #    - ASPNETCORE_ENVIRONMENT=Development
+  #  networks:
+  #    identityserverui: null
+  #  ports:
+  #    - '1006:80'
+volumes:
+  dbdata:
+    driver: local
+networks:
+  proxy:
+    driver: bridge
+  identityserverui:
+    driver: bridge
